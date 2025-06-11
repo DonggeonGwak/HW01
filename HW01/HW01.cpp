@@ -1,56 +1,95 @@
-﻿
-#include <iostream>
+﻿#include <iostream>
 
 using namespace std;
 
-//사용자로부터 5개의 숫자를 입력 받습니다
-//입력 받은 숫자를 배열에 저장합니다
-//배열에 저장된 숫자들의 합계와 평균을 계산합니다.
-//계산된 합계와 평균을 출력합니다.
-//배열을 인자로 넘겨 받아서 배열 원소들의 합계를 반환하는 함수를 구현해봅니다.
-//배열을 인자로 넘겨 받아서 배열 원소들의 평균을 반환하는 함수를 구현해봅니다.
-//위에서 만든 합계 함수와 평균 함수를 호출하여 합계와 평균을 출력합니다.
 
 int sum(int* arr, int size)
 {
 	int total = 0;
-
 	for (int i = 0; i < size; i++)
 	{
 		total += arr[i];
 	}
-
 	return total;
-
 }
 
-int aver(int* arr, int size)
+
+double aver(int* arr, int size)
 {
+	return static_cast<double>(sum(arr, size)) / size;
+}
 
-	int avg;
 
-	avg = sum(arr, size) / size;
+void sortAsc(int* arr, int size)
+{
+	for (int i = 0; i < size - 1; i++)
+	{
+		for (int j = 0; j < size - i - 1; j++)
+		{
+			if (arr[j] > arr[j + 1])
+			{
+				int temp = arr[j];
+				arr[j] = arr[j + 1];
+				arr[j + 1] = temp;
+			}
+		}
+	}
+}
 
-	return avg;
 
+void sortDsc(int* arr, int size)
+{
+	for (int i = 0; i < size - 1; i++)
+	{
+		for (int j = 0; j < size - i - 1; j++)
+		{
+			if (arr[j] < arr[j + 1])
+			{
+				int temp = arr[j];
+				arr[j] = arr[j + 1];
+				arr[j + 1] = temp;
+			}
+		}
+	}
+}
+
+
+void printArray(int* arr, int size)
+{
+	for (int i = 0; i < size; i++)
+	{
+		cout << arr[i] << " ";
+	}
+	cout << endl;
 }
 
 int main()
-{	
+{
 	int a;
+	cout << "숫자의 개수를 입력하세요: ";
 	cin >> a;
+
 	int* arr = new int[a];
-	
+
+	cout << a << "개의 정수를 입력하세요: ";
 	for (int i = 0; i < a; i++)
 	{
 		cin >> arr[i];
 	}
+
+	cout << "합계: " << sum(arr, a) << endl;
+	cout << "평균: " << aver(arr, a) << endl;
+
+	sortAsc(arr, a);
+	cout << "오름차순: ";
+	printArray(arr, a);
 	
-	cout << "합계는 " << sum(arr, a) << ", 평균은 " << aver(arr, a) << endl;
+	sortDsc(arr, a);
+	cout << "내림차순: ";
+	printArray(arr, a);
 
 	delete[] arr;
 	arr = nullptr;
 
 	return 0;
-
 }
